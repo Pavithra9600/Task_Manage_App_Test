@@ -1,0 +1,51 @@
+<!-- This comment is here to help you understand the purpose of the code below. -->
+
+<div class="container">
+    <h1>Task Management Application</h1>
+    <hr>
+    <!-- Task submission form -->
+    <form (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm">
+        <div class="form-group">
+            <label for="task">Task Name</label>
+            <input type="text" class="form-control" id="task" placeholder="Enter Task Name" ngModel name="task" required>
+            <!-- Display an error message if the task name is not entered -->
+            <small *ngIf="taskForm.invalid && taskForm.dirty" id="errorMessage" class="form-text text-danger">Required field</small>
+        </div>
+        <div class="form-group">
+            <label for="description">Task Description</label>
+            <input type="text" class="form-control" id="description" placeholder="Enter Task Description" ngModel name="description" required>
+            <!-- Display an error message if the task description is not entered -->
+            <small *ngIf="taskForm.invalid && taskForm.dirty" id="errorMessage" class="form-text text-danger">Required field</small>
+        </div>
+        <!-- Submit button, disabled if the form is invalid -->
+        <button [disabled]="taskForm.invalid" id="submitButton" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <hr>
+    <!-- Task list table -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Task Name</th>
+                <th>Task Description</th>
+                <th>Completed</th>
+                <th>Actions</th> <!-- Changed from "Delete" to "Actions" to include Edit and Delete buttons -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Display tasks in a table row using ngFor -->
+            <tr *ngFor="let t of taskArray; index as i">
+                <th>{{t.taskName}}</th>
+                <td>{{ t.description }}</td>
+                <td>
+                    <!-- Checkbox to mark task completion -->
+                    <input (change)="onCheck(i)" id="myCheckbox" type="checkbox" aria-label="Checkbox for following text input">
+                </td>
+                <td>
+                    <!-- Edit and Delete buttons for each task -->
+                    <button class="btn btn-warning btn-sm me-1" (click)="onEdit(i)">Edit</button>
+                    <button class="btn btn-danger btn-sm" (click)="onDelete(i)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
